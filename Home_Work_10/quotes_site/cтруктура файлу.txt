@@ -1,0 +1,66 @@
+Структура папок
+Серийный номер тома: F25B-1313
+C:.
+|   c.txt
+|   db.sqlite3
+|   import_data.py
+|   manage.py
+|   структура.txt
+|   
++---quotes
+|   |   admin.py
+|   |   apps.py
+|   |   forms.py
+|   |   models.py
+|   |   tests.py
+|   |   views.py
+|   |   __init__.py
+|   |   
+|   +---migrations
+|   |   |   0001_initial.py
+|   |   |   __init__.py
+|   |   |   
+|   |   \---__pycache__
+|   |           0001_initial.cpython-312.pyc
+|   |           __init__.cpython-312.pyc
+|   |           
+|   +---templates
+|   |   \---quotes
+|   |           author_detail.html
+|   |           base.html
+|   |           login.html
+|   |           new_quote.html
+|   |           quotes_list.html
+|   |           register.html
+|   |           signup.html
+|   |           
+|   \---__pycache__
+|           admin.cpython-312.pyc
+|           apps.cpython-312.pyc
+|           forms.cpython-312.pyc
+|           models.cpython-312.pyc
+|           views.cpython-312.pyc
+|           __init__.cpython-312.pyc
+|           
++---quotes_site
+|   |   asgi.py
+|   |   settings.py
+|   |   urls.py
+|   |   wsgi.py
+|   |   __init__.py
+|   |   
+|   \---__pycache__
+|           settings.cpython-312.pyc
+|           urls.cpython-312.pyc
+|           wsgi.cpython-312.pyc
+|           __init__.cpython-312.pyc
+|           
+\---templates
+        author_detail.html
+        base.html
+        login.html
+        new_quote.html
+        quotes_list.html
+        register.html
+        signup.html
+        
