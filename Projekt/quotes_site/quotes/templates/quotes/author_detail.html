@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Author Detail</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 0;
+            padding: 20px;
+            background-color: #f4f4f4;
+        }
+        h1 {
+            color: #333;
+        }
+        .author-detail {
+            background-color: #fff;
+            border: 1px solid #ddd;
+            padding: 20px;
+            border-radius: 8px;
+            max-width: 700px;
+            margin: 0 auto;
+        }
+        .author-detail p {
+            margin: 0 0 15px;
+        }
+        .author-detail h2 {
+            margin-top: 0;
+        }
+        .navbar {
+            background-color: #333;
+            padding: 10px;
+        }
+        .navbar a {
+            color: #fff;
+            text-decoration: none;
+            padding: 10px 15px;
+            display: inline-block;
+        }
+        .navbar a:hover {
+            background-color: #575757;
+        }
+    </style>
+</head>
+<body>
+    <div class="navbar">
+        <a href="{% url 'quotes_list' %}">Home</a>
+        <a href="{% url 'new_quote' %}">Add Quote</a>
+        <a href="{% url 'signup' %}">Sign Up</a>
+        <a href="{% url 'login' %}">Login</a>
+        <a href="{% url 'logout' %}">Logout</a>
+    </div>
+
+    <h1>Author Detail</h1>
+    <div class="author-detail">
+        <h2>{{ author.fullname }}</h2>
+        <p><strong>Born:</strong> {{ author.born_date }} in {{ author.born_location }}</p>
+        <p><strong>Description:</strong></p>
+        <p>{{ author.description }}</p>
+    </div>
+</body>
+</html>
+
