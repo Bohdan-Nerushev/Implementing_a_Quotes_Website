@@ -2,8 +2,10 @@
 
  **Available translations (English / German / Ukrainian)**  
  ||| 11  - 110 |||  Pages
+ 
  **Verfügbare Übersetzungen (Englisch / Deutsch / Ukrainisch)**
  ||| 110 - 211 |||  Seiten
+ 
  **Доступні переклади (англійською / німецькою / українською)**  
  ||| 211 - 309 |||  Cторінки
 
