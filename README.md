@@ -2,6 +2,11 @@
 
 A modern, secure, and robust Django web application for sharing and managing quotes and authors. This project implements a comprehensive features stack including user authentication (signup, login, secure logout with CSRF protection), a dynamic navigation bar with global message banners, clean templates with DRY architecture inheritance, data import/export commands, structured logging for auditing, database performance indexing, and 100% test coverage for core business operations.
 
+<p align="center">
+  <img src="assets/usage_example.gif" alt="Quotes Site Demo">
+</p>
+
+
 ---
 
 ## Table of Contents
