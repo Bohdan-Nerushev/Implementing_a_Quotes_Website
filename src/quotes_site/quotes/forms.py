@@ -3,7 +3,7 @@
 from django import forms
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.contrib.auth.models import User
-from .models import Quote, Author  # Імпортуйте модель Quote, якщо вона потрібна
+from .models import Quote, Author  # Import Quote model if needed
 
 class UserRegistrationForm(UserCreationForm):
     class Meta:

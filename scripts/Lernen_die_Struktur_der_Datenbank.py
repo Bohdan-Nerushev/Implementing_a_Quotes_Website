@@ -1,14 +1,14 @@
 import sqlite3
 
-# Підключення до бази даних
+# Connect to the database
 conn = sqlite3.connect('db.sqlite3')
 cursor = conn.cursor()
 
-# Отримання списку таблиць
+# Get list of tables
 cursor.execute("SELECT name FROM sqlite_master WHERE type='table';")
 tables = cursor.fetchall()
 
-# Отримання схеми кожної таблиці
+# Get schema of each table
 for table_name in tables:
     print(f"Table: {table_name[0]}")
     cursor.execute(f"PRAGMA table_info({table_name[0]});")
@@ -17,5 +17,5 @@ for table_name in tables:
         print(f"  Column: {column[1]}, Type: {column[2]}, Not Null: {column[3]}, Default: {column[4]}")
     print()
 
-# Закриття з'єднання
+# Close connection
 conn.close()

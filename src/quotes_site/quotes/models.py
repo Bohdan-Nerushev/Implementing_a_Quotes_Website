@@ -27,11 +27,5 @@ class Quote(models.Model):
     tags = models.ManyToManyField(Tag, blank=True)
     
     def __str__(self):
-        return self.quote[:50]  # Повертає перші 50 символів цитати
+        return self.quote[:50]  # Returns first 50 characters of quote
 
-
-
-
-class QuoteTag(models.Model):
-    quote = models.ForeignKey(Quote, on_delete=models.CASCADE)
-    tag = models.ForeignKey(Tag, on_delete=models.CASCADE)

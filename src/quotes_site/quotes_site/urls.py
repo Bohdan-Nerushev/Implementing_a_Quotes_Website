@@ -23,11 +23,11 @@ from quotes.views import signup, login_view, quotes_list, author_detail, logout,
 urlpatterns = [
     path('signup/', signup, name='signup'),
     path('login/', login_view, name='login'),
-    path('quotes/', quotes_list, name='quotes_list'),  # Список всіх цитат
-    path('quotes/page/<int:page>/', quotes_list, name='quotes_list_page'),  # Пагінація (змінив URL для логічного порядку)
+    path('quotes/', quotes_list, name='quotes_list'),  # List of all quotes
+    path('quotes/page/<int:page>/', quotes_list, name='quotes_list_page'),  # Pagination (changed URL for logical order)
     path('author/<int:author_id>/', author_detail, name='author_detail'),
     path('logout/', logout, name='logout'),
-    path('new-quote/', new_quote, name='new_quote'),  # Додавання цитати (URL змінив на "new-quote" для більш звичного формату)
-    path('add-author/', add_author, name='add_author'),  # Додавання автора (URL змінив на "add-author")
-    path('', quotes_list, name='quote_list'),  # Головна сторінка (на "quotes_list" змінив на відповідний до інших)
+    path('new-quote/', new_quote, name='new_quote'),  # Add quote (changed URL to "new-quote" for more common format)
+    path('add-author/', add_author, name='add_author'),  # Add author (changed URL to "add-author")
+    path('', quotes_list, name='quote_list'),  # Main page (changed to match other list URLs)
 ]

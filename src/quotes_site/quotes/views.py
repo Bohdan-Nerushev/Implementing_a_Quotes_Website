@@ -1,5 +1,5 @@
 from django.contrib.auth.decorators import login_required
-from django.contrib import messages  # Імпортуємо messages для відображення повідомлень
+from django.contrib import messages  # Import messages to display notifications
 from django.shortcuts import render, redirect, get_object_or_404
 from .forms import QuoteForm, RegisterForm, AuthorForm
 from .models import Quote, Author
@@ -46,12 +46,8 @@ def author_detail(request, author_id):
     author = get_object_or_404(Author, id=author_id)
     return render(request, 'quotes/author_detail.html', {'author': author})
 
-@login_required(login_url='login')  # Додаємо login_url, щоб перенаправляти користувачів на сторінку входу
+@login_required(login_url='login')  # Add login_url to redirect users to login page
 def new_quote(request):
-    if not request.user.is_authenticated:  # Перевірка аутентифікації користувача
-        messages.info(request, 'Please register or log in to add a quote.')
-        return redirect('login')
-    
     if request.method == 'POST':
         form = QuoteForm(request.POST)
         if form.is_valid():
@@ -61,12 +57,8 @@ def new_quote(request):
         form = QuoteForm()
     return render(request, 'quotes/new_quote.html', {'form': form})
 
-@login_required(login_url='login')  # Додаємо login_url
+@login_required(login_url='login')  # Add login_url
 def add_author(request):
-    if not request.user.is_authenticated:  # Перевірка аутентифікації користувача
-        messages.info(request, 'Please register or log in to add an author.')
-        return redirect('login')
-    
     if request.method == 'POST':
         form = AuthorForm(request.POST)
         if form.is_valid():
