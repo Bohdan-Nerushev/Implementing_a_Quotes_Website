@@ -4,6 +4,7 @@ from django.shortcuts import render, redirect, get_object_or_404
 from .forms import QuoteForm, RegisterForm, AuthorForm
 from .models import Quote, Author
 from django.core.paginator import Paginator
+from django.views.decorators.http import require_POST
 from django.contrib.auth import login as auth_login, logout as auth_logout
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 
@@ -29,6 +30,7 @@ def login_view(request):
         form = AuthenticationForm()
     return render(request, 'login.html', {'form': form})
 
+@require_POST
 def logout(request):
     auth_logout(request)
     return redirect('quotes_list')

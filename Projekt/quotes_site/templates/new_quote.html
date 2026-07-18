@@ -60,6 +60,21 @@
         .navbar a:hover {
             background-color: #575757;
         }
+        .navbar button {
+            background: none;
+            border: none;
+            color: #fff;
+            text-decoration: none;
+            padding: 10px 15px;
+            display: inline-block;
+            font-family: Arial, sans-serif;
+            font-size: 16px;
+            cursor: pointer;
+            vertical-align: middle;
+        }
+        .navbar button:hover {
+            background-color: #575757;
+        }
     </style>
 </head>
 <body>
@@ -68,7 +83,10 @@
         <a href="{% url 'new_quote' %}">Add Quote</a>
         <a href="{% url 'signup' %}">Sign Up</a>
         <a href="{% url 'login' %}">Login</a>
-        <a href="{% url 'logout' %}">Logout</a>
+        <form action="{% url 'logout' %}" method="post" style="display: inline;">
+            {% csrf_token %}
+            <button type="submit">Logout</button>
+        </form>
     </div>
 
     <h1>Add New Quote</h1>
