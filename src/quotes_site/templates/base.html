@@ -3,37 +3,155 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{% block title %}Quotes Site{% endblock %}</title>
-    {% load static %} <!-- Add this line -->
+    <title>{% block title %}Quotes Hub{% endblock %}</title>
+    {% load static %}
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Outfit:wght@500;600;700&display=swap" rel="stylesheet">
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="{% static 'styles.css' %}">
 </head>
 <body>
-    <div class="navbar">
-        <a href="{% url 'quotes_list' %}">Home</a>
-        {% if user.is_authenticated %}
-            <a href="{% url 'new_quote' %}">Add Quote</a>
-            <a href="{% url 'add_author' %}">Add Author</a>
-            <form action="{% url 'logout' %}" method="post" style="display: inline;">
-                {% csrf_token %}
-                <button type="submit">Logout</button>
-            </form>
-        {% else %}
-            <a href="{% url 'signup' %}">Sign Up</a>
-            <a href="{% url 'login' %}">Login</a>
-        {% endif %}
-    </div>
+    <header class="header">
+        <div class="nav-container">
+            <a href="{% url 'quotes_list' %}" class="brand">
+                <i class="fa-solid fa-quote-left brand-icon"></i>
+                <span>Quotes<span class="brand-sub">Hub</span></span>
+            </a>
+            <button class="mobile-menu-toggle" id="mobileMenuToggleBtn" aria-label="Toggle navigation menu">
+                <i class="fa-solid fa-bars"></i>
+            </button>
+            <nav class="nav-menu">
+                <a href="{% url 'quotes_list' %}" class="nav-link">
+                    <i class="fa-solid fa-house"></i> Home
+                </a>
+                {% if user.is_authenticated %}
+                    <a href="{% url 'new_quote' %}" class="nav-link">
+                        <i class="fa-solid fa-pen-nib"></i> Add Quote
+                    </a>
+                    <a href="{% url 'add_author' %}" class="nav-link">
+                        <i class="fa-solid fa-user-plus"></i> Add Author
+                    </a>
+                    <a href="{% url 'add_tag' %}" class="nav-link">
+                        <i class="fa-solid fa-hashtag"></i> Add Tag
+                    </a>
+                    
+                    <!-- Profile Dropdown -->
+                    <div class="profile-dropdown" id="profileDropdown">
+                        <button class="dropdown-trigger" aria-haspopup="true" aria-expanded="false" id="dropdownTriggerBtn">
+                            <div class="user-avatar-small">
+                                {{ user.username|slice:":1"|upper }}
+                            </div>
+                            <span class="username-truncated" title="{{ user.username }}">{{ user.username }}</span>
+                            <i class="fa-solid fa-chevron-down chevron-icon"></i>
+                        </button>
+                        <div class="dropdown-menu" aria-labelledby="dropdownTriggerBtn">
+                            <div class="dropdown-header">
+                                <span class="header-username">{{ user.username }}</span>
+                                <span class="header-email" title="{{ user.email }}">{{ user.email|default:"No email specified" }}</span>
+                            </div>
+                            <hr class="dropdown-divider">
+                            <a href="{% url 'profile' %}" class="dropdown-item">
+                                <i class="fa-solid fa-circle-user"></i> View Profile
+                            </a>
+                            <a href="{% url 'change_password' %}" class="dropdown-item">
+                                <i class="fa-solid fa-key"></i> Change Password
+                            </a>
+                            <a href="{% url 'change_email' %}" class="dropdown-item">
+                                <i class="fa-solid fa-envelope"></i> Change Email
+                            </a>
+                            <a href="{% url 'delete_account' %}" class="dropdown-item dropdown-item-danger">
+                                <i class="fa-solid fa-user-minus"></i> Delete Account
+                            </a>
+                            <hr class="dropdown-divider">
+                            <form action="{% url 'logout' %}" method="post" class="dropdown-logout-form">
+                                {% csrf_token %}
+                                <button type="submit" class="dropdown-item dropdown-logout-btn">
+                                    <i class="fa-solid fa-right-from-bracket"></i> Logout
+                                </button>
+                            </form>
+                        </div>
+                    </div>
+                {% else %}
+                    <a href="{% url 'signup' %}" class="nav-link nav-btn-signup">
+                        <i class="fa-solid fa-user-gear"></i> Sign Up
+                    </a>
+                    <a href="{% url 'login' %}" class="nav-link nav-btn-login">
+                        <i class="fa-solid fa-right-to-bracket"></i> Login
+                    </a>
+                {% endif %}
+            </nav>
+        </div>
+    </header>
 
-    <div class="content">
-        {% if messages %}
-            <ul class="messages">
-                {% for message in messages %}
-                    <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
-                {% endfor %}
-            </ul>
-        {% endif %}
+    <main class="main-wrapper">
+        <div class="content-container">
+            {% if messages %}
+                <div class="messages-container">
+                    {% for message in messages %}
+                        <div class="alert-message {{ message.tags }}">
+                            <i class="fa-solid {% if message.tags == 'success' %}fa-circle-check{% elif message.tags == 'error' %}fa-circle-xmark{% else %}fa-circle-info{% endif %} alert-icon"></i>
+                            <span class="alert-text">{{ message }}</span>
+                        </div>
+                    {% endfor %}
+                </div>
+            {% endif %}
 
-        {% block content %}
-        {% endblock %}
-    </div>
+            {% block content %}
+            {% endblock %}
+        </div>
+    </main>
+
+    <footer class="footer">
+        <div class="footer-container">
+            <p>&copy; 2026 Quotes Hub. Created with passion for inspiration.</p>
+        </div>
+    </footer>
+    <script>
+        // Dropdown toggle functionality
+        const dropdown = document.getElementById('profileDropdown');
+        const trigger = document.getElementById('dropdownTriggerBtn');
+        
+        if (trigger && dropdown) {
+            trigger.addEventListener('click', function(e) {
+                e.stopPropagation();
+                const expanded = trigger.getAttribute('aria-expanded') === 'true';
+                trigger.setAttribute('aria-expanded', !expanded);
+                dropdown.classList.toggle('active');
+            });
+            
+            // Close dropdown when clicking outside
+            document.addEventListener('click', function(e) {
+                if (!dropdown.contains(e.target)) {
+                    trigger.setAttribute('aria-expanded', 'false');
+                    dropdown.classList.remove('active');
+                }
+            });
+        }
+
+        // Mobile menu toggle functionality
+        const mobileToggle = document.getElementById('mobileMenuToggleBtn');
+        const navMenu = document.querySelector('.nav-menu');
+        
+        if (mobileToggle && navMenu) {
+            mobileToggle.addEventListener('click', function(e) {
+                e.stopPropagation();
+                navMenu.classList.toggle('mobile-active');
+                const isOpened = navMenu.classList.contains('mobile-active');
+                mobileToggle.innerHTML = isOpened ? '<i class="fa-solid fa-xmark"></i>' : '<i class="fa-solid fa-bars"></i>';
+            });
+
+            // Close mobile menu when clicking outside
+            document.addEventListener('click', function(e) {
+                if (navMenu.classList.contains('mobile-active') && !navMenu.contains(e.target) && !mobileToggle.contains(e.target)) {
+                    navMenu.classList.remove('mobile-active');
+                    mobileToggle.innerHTML = '<i class="fa-solid fa-bars"></i>';
+                }
+            });
+        }
+    </script>
 </body>
 </html>
+

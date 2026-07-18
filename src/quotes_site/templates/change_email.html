@@ -1,13 +1,13 @@
 {% extends 'base.html' %}
 
-{% block title %}Login | Quotes Hub{% endblock %}
+{% block title %}Change Email | Quotes Hub{% endblock %}
 
 {% block content %}
 <div class="form-card auth-card">
     <div class="form-header">
-        <i class="fa-solid fa-lock form-icon-banner"></i>
-        <h2 class="form-title">Welcome Back</h2>
-        <p class="form-subtitle">Login to manage quotes, authors, and customize your experience.</p>
+        <i class="fa-solid fa-envelope form-icon-banner"></i>
+        <h2 class="form-title">Change Email</h2>
+        <p class="form-subtitle">Update your email address associated with this account.</p>
     </div>
     
     <form method="post" class="styled-form">
@@ -15,11 +15,7 @@
         {% for field in form %}
             <div class="form-group {% if field.errors %}has-errors{% endif %}">
                 <label for="{{ field.id_for_label }}" class="form-label">
-                    {% if field.name == 'username' %}
-                        <i class="fa-solid fa-user"></i>
-                    {% elif field.name == 'password' %}
-                        <i class="fa-solid fa-key"></i>
-                    {% endif %}
+                    <i class="fa-solid fa-envelope"></i>
                     {{ field.label }}
                 </label>
                 <div class="form-control-wrapper">
@@ -33,16 +29,14 @@
                 {% endif %}
             </div>
         {% endfor %}
-        <div class="form-actions">
-            <button type="submit" class="btn-primary btn-block">
-                <i class="fa-solid fa-right-to-bracket"></i> Sign In
+        <div class="form-actions" style="display: flex; gap: 12px; margin-top: 10px;">
+            <button type="submit" class="btn-primary" style="flex: 1;">
+                <i class="fa-solid fa-save"></i> Save Changes
             </button>
+            <a href="{% url 'profile' %}" class="nav-link nav-btn-login" style="padding: 12px 24px; text-decoration: none; text-align: center; border-radius: var(--radius-sm); font-weight: 600; display: inline-flex; align-items: center; justify-content: center;">
+                Cancel
+            </a>
         </div>
     </form>
-    
-    <div class="form-footer">
-        <p>Don't have an account yet? <a href="{% url 'signup' %}" class="footer-link">Register here</a></p>
-    </div>
 </div>
 {% endblock %}
-

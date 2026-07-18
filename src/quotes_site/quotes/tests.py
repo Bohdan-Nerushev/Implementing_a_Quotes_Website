@@ -63,6 +63,14 @@ class QuotesSiteTests(TestCase):
         })
         self.assertEqual(response.status_code, 302)
 
+    def test_login_view_failure(self):
+        response = self.client.post(reverse('login'), {
+            'username': self.username,
+            'password': 'WrongPassword123!'
+        })
+        self.assertEqual(response.status_code, 200)
+        self.assertContains(response, "Invalid username or password.")
+
     def test_logout_view_get_forbidden(self):
         response = self.client.get(reverse('logout'))
         self.assertEqual(response.status_code, 405)
@@ -102,3 +110,106 @@ class QuotesSiteTests(TestCase):
         })
         self.assertEqual(response.status_code, 302)
         self.assertTrue(Author.objects.filter(fullname='New Author').exists())
+
+    def test_signup_view_post_failed(self):
+        response = self.client.post(reverse('signup'), {
+            'username': 'newuser',
+            'email': 'newuser@example.com',
+            'password': 'Password123!',
+            'password_confirm': 'WrongPassword123!'
+        })
+        self.assertEqual(response.status_code, 200)
+        self.assertContains(response, "Registration failed. Please correct the errors below.")
+
+    def test_signup_view_post_weak_password(self):
+        response = self.client.post(reverse('signup'), {
+            'username': 'newuser',
+            'email': 'newuser@example.com',
+            'password': '123',
+            'password_confirm': '123'
+        })
+        self.assertEqual(response.status_code, 200)
+        self.assertContains(response, "Registration failed. Please correct the errors below.")
+
+    def test_profile_view_requires_login(self):
+        response = self.client.get(reverse('profile'))
+        self.assertEqual(response.status_code, 302)
+        self.assertIn(reverse('login'), response.url)
+
+    def test_profile_view_success(self):
+        self.client.login(username=self.username, password=self.password)
+        response = self.client.get(reverse('profile'))
+        self.assertEqual(response.status_code, 200)
+        self.assertContains(response, self.username)
+
+    def test_change_password_success(self):
+        self.client.login(username=self.username, password=self.password)
+        response = self.client.post(reverse('change_password'), {
+            'old_password': self.password,
+            'new_password1': 'NewSecurePassword123!',
+            'new_password2': 'NewSecurePassword123!'
+        })
+        self.assertEqual(response.status_code, 302)
+        # Verify password changed
+        self.user.refresh_from_db()
+        self.assertTrue(self.user.check_password('NewSecurePassword123!'))
+
+    def test_delete_account_success(self):
+        self.client.login(username=self.username, password=self.password)
+        response = self.client.post(reverse('delete_account'), {
+            'password': self.password
+        })
+        self.assertEqual(response.status_code, 302)
+        self.assertFalse(User.objects.filter(username=self.username).exists())
+
+    def test_delete_account_wrong_password(self):
+        self.client.login(username=self.username, password=self.password)
+        response = self.client.post(reverse('delete_account'), {
+            'password': 'WrongPassword123!'
+        })
+        self.assertEqual(response.status_code, 200)
+        self.assertTrue(User.objects.filter(username=self.username).exists())
+        self.assertContains(response, "Incorrect password. Please try again.")
+
+    def test_change_email_success(self):
+        self.client.login(username=self.username, password=self.password)
+        response = self.client.post(reverse('change_email'), {
+            'email': 'newemail@example.com'
+        })
+        self.assertEqual(response.status_code, 302)
+        self.user.refresh_from_db()
+        self.assertEqual(self.user.email, 'newemail@example.com')
+
+    def test_change_email_already_exists(self):
+        # Create another user with the target email
+        User.objects.create_user(username='otheruser', password='Password123!', email='taken@example.com')
+        
+        self.client.login(username=self.username, password=self.password)
+        response = self.client.post(reverse('change_email'), {
+            'email': 'taken@example.com'
+        })
+        self.assertEqual(response.status_code, 200)
+        self.assertContains(response, "This email is already in use by another account.")
+        self.user.refresh_from_db()
+        self.assertNotEqual(self.user.email, 'taken@example.com')
+
+    def test_add_tag_success(self):
+        self.client.login(username=self.username, password=self.password)
+        response = self.client.post(reverse('add_tag'), {
+            'name': 'Inspiration'
+        })
+        self.assertEqual(response.status_code, 302)
+        self.assertTrue(Tag.objects.filter(name='inspiration').exists())
+
+    def test_add_tag_already_exists(self):
+        Tag.objects.create(name='inspiration')
+        
+        self.client.login(username=self.username, password=self.password)
+        response = self.client.post(reverse('add_tag'), {
+            'name': 'Inspiration'
+        })
+        self.assertEqual(response.status_code, 200)
+        self.assertContains(response, "This tag already exists.")
+
+
+

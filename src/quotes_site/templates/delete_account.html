@@ -1,0 +1,52 @@
+{% extends 'base.html' %}
+
+{% block title %}Delete Account | Quotes Hub{% endblock %}
+
+{% block content %}
+<div class="form-card auth-card" style="border-color: var(--error);">
+    <div class="form-header">
+        <i class="fa-solid fa-triangle-exclamation form-icon-banner" style="color: var(--error); background-color: rgba(239, 68, 68, 0.08);"></i>
+        <h2 class="form-title" style="color: var(--error);">Delete Account?</h2>
+        <p class="form-subtitle">This action is permanent and cannot be undone. All your details will be erased from our database.</p>
+    </div>
+    
+    <form method="post" class="styled-form" id="deleteAccountForm">
+        {% csrf_token %}
+        {% for field in form %}
+            <div class="form-group {% if field.errors %}has-errors{% endif %}">
+                <label for="{{ field.id_for_label }}" class="form-label">
+                    <i class="fa-solid fa-key" style="color: var(--error);"></i>
+                    {{ field.label }}
+                </label>
+                <div class="form-control-wrapper">
+                    {{ field }}
+                </div>
+                {% if field.errors %}
+                    <div class="field-error-msg">
+                        <i class="fa-solid fa-circle-exclamation"></i>
+                        {{ field.errors.as_text }}
+                    </div>
+                {% endif %}
+            </div>
+        {% endfor %}
+        <div class="form-actions" style="display: flex; flex-direction: column; gap: 12px; margin-top: 10px;">
+            <button type="submit" class="btn-primary" style="background: var(--error); box-shadow: 0 4px 10px rgba(239, 68, 68, 0.25);">
+                <i class="fa-solid fa-user-minus"></i> Permanently Delete My Account
+            </button>
+            <a href="{% url 'profile' %}" class="nav-link nav-btn-login" style="padding: 12px 24px; text-decoration: none; text-align: center; border-radius: var(--radius-sm); font-weight: 600; display: inline-flex; align-items: center; justify-content: center;">
+                Cancel and Go Back
+            </a>
+        </div>
+    </form>
+</div>
+
+<script>
+    document.getElementById('deleteAccountForm').addEventListener('submit', function(e) {
+        const userInput = prompt("WARNING: This action is irreversible. To confirm deletion, please type 'delete' in the box below:");
+        if (userInput !== 'delete') {
+            e.preventDefault();
+            alert("Verification failed. Account deletion was canceled.");
+        }
+    });
+</script>
+{% endblock %}

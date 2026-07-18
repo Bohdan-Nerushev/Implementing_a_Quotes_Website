@@ -18,7 +18,10 @@ Including another URLconf
 
 
 from django.urls import path
-from quotes.views import signup, login_view, quotes_list, author_detail, logout, new_quote, add_author
+from quotes.views import (
+    signup, login_view, quotes_list, author_detail, logout, new_quote, add_author,
+    profile_view, change_password, delete_account, change_email, add_tag
+)
 
 urlpatterns = [
     path('signup/', signup, name='signup'),
@@ -29,5 +32,13 @@ urlpatterns = [
     path('logout/', logout, name='logout'),
     path('new-quote/', new_quote, name='new_quote'),  # Add quote (changed URL to "new-quote" for more common format)
     path('add-author/', add_author, name='add_author'),  # Add author (changed URL to "add-author")
+    path('add-tag/', add_tag, name='add_tag'),  # Add tag
+    path('profile/', profile_view, name='profile'),
+    path('profile/change-password/', change_password, name='change_password'),
+    path('profile/change-email/', change_email, name='change_email'),
+    path('profile/delete/', delete_account, name='delete_account'),
     path('', quotes_list, name='quotes_list'),  # Main page
 ]
+
+
+

@@ -1,0 +1,38 @@
+{% extends 'base.html' %}
+
+{% block title %}My Profile | Quotes Hub{% endblock %}
+
+{% block content %}
+<div class="form-card auth-card">
+    <div class="form-header">
+        <div class="author-avatar" style="margin: 0 auto 16px;">
+            {{ user.username|slice:":1"|upper }}
+        </div>
+        <h2 class="form-title">My Profile</h2>
+        <p class="form-subtitle">Manage your account credentials and security settings.</p>
+    </div>
+
+    <div class="profile-details" style="margin-bottom: 30px; text-align: left; background-color: var(--bg-primary); padding: 20px; border-radius: var(--radius-md); border: 1px solid var(--border-color);">
+        <div style="margin-bottom: 12px; display: flex; align-items: center; gap: 8px;">
+            <i class="fa-solid fa-user" style="color: var(--primary); width: 16px;"></i>
+            <span><strong>Username:</strong> {{ user.username }}</span>
+        </div>
+        <div style="display: flex; align-items: center; gap: 8px;">
+            <i class="fa-solid fa-envelope" style="color: var(--primary); width: 16px;"></i>
+            <span><strong>Email:</strong> {{ user.email|default:"Not specified" }}</span>
+        </div>
+    </div>
+
+    <div style="display: flex; flex-direction: column; gap: 12px;">
+        <a href="{% url 'change_password' %}" class="btn-primary">
+            <i class="fa-solid fa-key"></i> Change Password
+        </a>
+        <a href="{% url 'change_email' %}" class="btn-primary" style="background: linear-gradient(135deg, #10b981, #059669); box-shadow: 0 4px 10px rgba(16, 185, 129, 0.2);">
+            <i class="fa-solid fa-envelope"></i> Change Email
+        </a>
+        <a href="{% url 'delete_account' %}" class="logout-btn" style="text-align: center; border: 1px solid var(--error); color: var(--error); border-radius: var(--radius-sm); padding: 12px 24px; text-decoration: none; font-weight: 600; display: inline-flex; justify-content: center; align-items: center; gap: 8px; transition: var(--transition);">
+            <i class="fa-solid fa-user-minus"></i> Delete Account
+        </a>
+    </div>
+</div>
+{% endblock %}

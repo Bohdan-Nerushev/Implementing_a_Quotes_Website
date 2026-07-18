@@ -1,13 +1,41 @@
 {% extends 'base.html' %}
 
-{% block title %}{{ author.fullname }} - Biography{% endblock %}
+{% block title %}{{ author.fullname }} - Profile & Biography | Quotes Hub{% endblock %}
 
 {% block content %}
-    <h2>{{ author.fullname }}</h2>
-    <div class="author-detail" style="margin-top: 20px;">
-        <p><strong>Born:</strong> {{ author.born_date }} in {{ author.born_location }}</p>
-        <hr style="border: 0; border-top: 1px solid #dee2e6; margin: 20px 0;">
-        <p><strong>Biography:</strong></p>
-        <p style="white-space: pre-line;">{{ author.description }}</p>
+<div style="margin-bottom: 20px;">
+    <a href="{% url 'quotes_list' %}" onclick="if(document.referrer) { window.history.back(); return false; }" class="nav-link" style="display: inline-flex; align-items: center; gap: 8px; border: 1px solid var(--border-color); width: fit-content; background: var(--bg-card); border-radius: var(--radius-sm); font-weight: 500; padding: 8px 16px;">
+        <i class="fa-solid fa-arrow-left"></i> Go Back
+    </a>
+</div>
+<div class="author-profile-card">
+    <div class="author-header">
+        <div class="author-avatar">
+            {{ author.fullname|slice:":1" }}
+        </div>
+        <div class="author-title-block">
+            <h1 class="author-name">{{ author.fullname }}</h1>
+            <div class="author-meta-info">
+                <span class="meta-item">
+                    <i class="fa-solid fa-calendar-day"></i>
+                    <strong>Born:</strong> {{ author.born_date }}
+                </span>
+                <span class="meta-item">
+                    <i class="fa-solid fa-earth-americas"></i>
+                    <strong>Place:</strong> {{ author.born_location }}
+                </span>
+            </div>
+        </div>
     </div>
+    
+    <div class="author-bio-section">
+        <h3 class="section-title">
+            <i class="fa-solid fa-book-open"></i> Biography
+        </h3>
+        <div class="author-bio-content">
+            {{ author.description|linebreaks }}
+        </div>
+    </div>
+</div>
 {% endblock %}
+

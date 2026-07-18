@@ -1,47 +1,62 @@
 {% extends 'base.html' %}
 
-{% block title %}Quotes List{% endblock %}
+{% block title %}Explore Inspiring Quotes | Quotes Hub{% endblock %}
 
 {% block content %}
-    <h1>Quotes List</h1>
-    <div>
+    <div class="page-header">
+        <h1 class="page-title">Inspiring Quotes</h1>
+        <p class="page-subtitle">Discover words of wisdom from outstanding historical and contemporary personalities.</p>
+    </div>
+
+    <div class="quotes-grid">
         {% for quote in page_obj %}
-            <blockquote>
-                <p>"{{ quote.quote }}"</p>
-                <footer>— {{ quote.author.fullname }}</footer>
-                {% if quote.tags.all %}
-                    <div class="tags">
-                        {% for tag in quote.tags.all %}
-                            <span class="tag-badge">{{ tag.name }}</span>
-                        {% endfor %}
+            <article class="quote-card">
+                <i class="fa-solid fa-quote-right quote-card-watermark"></i>
+                <div class="quote-card-body">
+                    <p class="quote-text">"{{ quote.quote }}"</p>
+                </div>
+                <div class="quote-card-footer">
+                    <div class="quote-meta">
+                        <span class="quote-author-label">Author</span>
+                        <a href="{% url 'author_detail' quote.author.id %}" class="quote-author-link">
+                            <i class="fa-solid fa-circle-user"></i> {{ quote.author.fullname }}
+                        </a>
                     </div>
-                {% endif %}
-                <p style="margin-top: 10px; font-size: 0.9em;">
-                    <a href="{% url 'author_detail' quote.author.id %}">View Author Bio</a>
-                </p>
-            </blockquote>
+                    {% if quote.tags.all %}
+                        <div class="quote-tags">
+                            {% for tag in quote.tags.all %}
+                                <a href="#" class="tag-badge">#{{ tag.name }}</a>
+                            {% endfor %}
+                        </div>
+                    {% endif %}
+                </div>
+            </article>
         {% empty %}
-            <p>No quotes available yet.</p>
+            <div class="empty-state">
+                <i class="fa-regular fa-folder-open empty-icon"></i>
+                <p class="empty-text">No quotes available yet. Be the first to add one!</p>
+            </div>
         {% endfor %}
     </div>
 
     {% if page_obj.paginator.num_pages > 1 %}
-        <div class="pagination">
-            <span class="step-links">
+        <div class="pagination-wrapper">
+            <nav class="pagination-nav">
                 {% if page_obj.has_previous %}
-                    <a href="?page=1">&laquo; first</a>
-                    <a href="?page={{ page_obj.previous_page_number }}">previous</a>
+                    <a href="?page=1" class="pag-btn" title="First Page"><i class="fa-solid fa-angles-left"></i></a>
+                    <a href="?page={{ page_obj.previous_page_number }}" class="pag-btn" title="Previous Page"><i class="fa-solid fa-angle-left"></i> Prev</a>
                 {% endif %}
 
-                <span class="current">
-                    Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}.
+                <span class="pag-current">
+                    Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}
                 </span>
 
                 {% if page_obj.has_next %}
-                    <a href="?page={{ page_obj.next_page_number }}">next</a>
-                    <a href="?page={{ page_obj.paginator.num_pages }}">last &raquo;</a>
+                    <a href="?page={{ page_obj.next_page_number }}" class="pag-btn" title="Next Page">Next <i class="fa-solid fa-angle-right"></i></a>
+                    <a href="?page={{ page_obj.paginator.num_pages }}" class="pag-btn" title="Last Page"><i class="fa-solid fa-angles-right"></i></a>
                 {% endif %}
-            </span>
+            </nav>
         </div>
     {% endif %}
 {% endblock %}
+
