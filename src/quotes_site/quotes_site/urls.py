@@ -29,5 +29,5 @@ urlpatterns = [
     path('logout/', logout, name='logout'),
     path('new-quote/', new_quote, name='new_quote'),  # Add quote (changed URL to "new-quote" for more common format)
     path('add-author/', add_author, name='add_author'),  # Add author (changed URL to "add-author")
-    path('', quotes_list, name='quote_list'),  # Main page (changed to match other list URLs)
+    path('', quotes_list, name='quotes_list'),  # Main page
 ]

@@ -1,13 +1,8 @@
-# quotes/models.py
-from django.db import models
-
-# C:\Users\Lenovo\Desktop\Home_Work_10\quotes_site\quotes\models.py
-
 from django.db import models
 from django.contrib.auth.models import User
 
 class Author(models.Model):
-    fullname = models.CharField(max_length=100)
+    fullname = models.CharField(max_length=100, db_index=True)
     born_date = models.DateField(null=True, blank=True)
     born_location = models.CharField(max_length=100, null=True, blank=True)
     description = models.TextField(blank=True)

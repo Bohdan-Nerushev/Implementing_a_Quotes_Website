@@ -1,0 +1,216 @@
+/* Global styles */
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    line-height: 1.6;
+    margin: 0;
+    padding: 0;
+    background-color: #f8f9fa;
+    color: #333;
+}
+
+h1, h2, h3 {
+    color: #222;
+}
+
+.content {
+    max-width: 800px;
+    margin: 30px auto;
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+}
+
+/* Navbar */
+.navbar {
+    background-color: #212529;
+    padding: 10px 20px;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+}
+
+.navbar a {
+    color: #f8f9fa;
+    text-decoration: none;
+    padding: 8px 16px;
+    display: inline-block;
+    border-radius: 4px;
+    transition: background-color 0.2s;
+}
+
+.navbar a:hover {
+    background-color: #343a40;
+}
+
+.navbar button {
+    background: none;
+    border: none;
+    color: #f8f9fa;
+    text-decoration: none;
+    padding: 8px 16px;
+    display: inline-block;
+    font-family: inherit;
+    font-size: 16px;
+    cursor: pointer;
+    border-radius: 4px;
+    transition: background-color 0.2s;
+    vertical-align: middle;
+}
+
+.navbar button:hover {
+    background-color: #343a40;
+}
+
+/* Quotes */
+blockquote {
+    background-color: #fff;
+    border-left: 5px solid #0d6efd;
+    margin: 0 0 25px 0;
+    padding: 15px 25px;
+    border-radius: 0 8px 8px 0;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.02);
+}
+
+blockquote p {
+    font-size: 1.1em;
+    font-style: italic;
+    margin-bottom: 10px;
+}
+
+blockquote footer {
+    font-weight: bold;
+    color: #495057;
+}
+
+.tags {
+    margin-top: 10px;
+    font-size: 0.9em;
+    color: #6c757d;
+}
+
+.tag-badge {
+    display: inline-block;
+    background-color: #e9ecef;
+    color: #495057;
+    padding: 2px 8px;
+    border-radius: 4px;
+    margin-right: 5px;
+    text-decoration: none;
+}
+
+.tag-badge:hover {
+    background-color: #dee2e6;
+}
+
+/* Forms */
+form {
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+.form-group {
+    margin-bottom: 20px;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 6px;
+    font-weight: 600;
+}
+
+.form-group input, .form-group textarea, .form-group select {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ced4da;
+    border-radius: 4px;
+    box-sizing: border-box;
+    font-family: inherit;
+}
+
+.form-group input:focus, .form-group textarea:focus, .form-group select:focus {
+    outline: none;
+    border-color: #86b7fe;
+    box-shadow: 0 0 0 0.25rem rgba(13, 110, 253, 0.25);
+}
+
+button[type="submit"], input[type="submit"] {
+    background-color: #0d6efd;
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    font-size: 16px;
+    font-weight: 600;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+button[type="submit"]:hover, input[type="submit"]:hover {
+    background-color: #0b5ed7;
+}
+
+/* Pagination */
+.pagination {
+    margin-top: 30px;
+    text-align: center;
+}
+
+.pagination a {
+    color: #0d6efd;
+    text-decoration: none;
+    padding: 8px 12px;
+    border: 1px solid #dee2e6;
+    margin: 0 2px;
+    border-radius: 4px;
+}
+
+.pagination a:hover {
+    background-color: #e9ecef;
+}
+
+.pagination .current {
+    padding: 8px 12px;
+    background-color: #0d6efd;
+    color: #fff;
+    border: 1px solid #0d6efd;
+    margin: 0 2px;
+    border-radius: 4px;
+}
+
+/* Messages */
+.messages {
+    list-style: none;
+    padding: 0;
+    margin-bottom: 20px;
+}
+
+.messages li {
+    padding: 12px 20px;
+    margin-bottom: 10px;
+    border-radius: 4px;
+}
+
+.messages li.success {
+    background-color: #d1e7dd;
+    color: #0f5132;
+    border: 1px solid #badbcc;
+}
+
+.messages li.error {
+    background-color: #f8d7da;
+    color: #842029;
+    border: 1px solid #f5c2c7;
+}
+
+.messages li.info {
+    background-color: #cff4fc;
+    color: #055160;
+    border: 1px solid #b6effb;
+}
+
+.messages li.warning {
+    background-color: #fff3cd;
+    color: #664d03;
+    border: 1px solid #ffecb5;
+}

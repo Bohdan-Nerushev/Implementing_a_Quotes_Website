@@ -1,38 +1,14 @@
-# C:\Users\Lenovo\Desktop\Home_Work_10\quotes_site\quotes\forms.py
-
 from django import forms
-from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.contrib.auth.models import User
-from .models import Quote, Author  # Import Quote model if needed
-
-class UserRegistrationForm(UserCreationForm):
-    class Meta:
-        model = User
-        fields = ['username', 'password1', 'password2']
-
-class UserLoginForm(AuthenticationForm):
-    class Meta:
-        model = User
-        fields = ['username', 'password']
+from .models import Quote, Author
 
 class QuoteForm(forms.ModelForm):
     class Meta:
         model = Quote
-        fields = ['quote', 'author']
-
-class CustomUserCreationForm(UserCreationForm):
-    email = forms.EmailField(required=True)
-
-    class Meta:
-        model = User
-        fields = ('username', 'email', 'password1', 'password2')
-
-    def save(self, commit=True):
-        user = super(CustomUserCreationForm, self).save(commit=False)
-        user.email = self.cleaned_data['email']
-        if commit:
-            user.save()
-        return user
+        fields = ['quote', 'author', 'tags']
+        widgets = {
+            'tags': forms.CheckboxSelectMultiple(),
+        }
 
 class RegisterForm(forms.ModelForm):
     password = forms.CharField(widget=forms.PasswordInput)
@@ -61,3 +37,4 @@ class AuthorForm(forms.ModelForm):
     class Meta:
         model = Author
         fields = ['fullname', 'born_date', 'born_location', 'description']
+
